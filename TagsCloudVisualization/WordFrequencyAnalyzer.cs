@@ -24,9 +24,6 @@ namespace TagsCloudVisualization
 
         public Dictionary<string, int> MakeStatisitcs(IEnumerable<string> lines)
         {
-            if (lines is null)    
-                throw new ArgumentNullException();
-
             return lines.SelectMany(line => wordPattern.Matches(line).Cast<Match>()).Select(m => lowerCase
                         ? m.Value.ToLowerInvariant()
                         : m.Value.ToUpperInvariant())

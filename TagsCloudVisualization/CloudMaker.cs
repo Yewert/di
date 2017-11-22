@@ -8,20 +8,23 @@ namespace TagsCloudVisualization
     public class CloudMaker
     {
         private readonly IWordFrequencyAnalyzer statsMaker;
-        private readonly ICircularCloudLayouter layouter;
+        private readonly ICloudLayouter layouter;
+        private readonly string fontName;
         private readonly IFontNormalizer normalizer;
         private readonly IImageBounder bounder;
         private readonly IWordCloudVisualisator visualisator;
 
         public CloudMaker(
             IWordFrequencyAnalyzer statsMaker,
-            ICircularCloudLayouter layouter,
+            ICloudLayouter layouter,
+            string fontName,
             IFontNormalizer normalizer,
             IImageBounder bounder,
             IWordCloudVisualisator visualisator)
         {
             this.statsMaker = statsMaker;
             this.layouter = layouter;
+            this.fontName = fontName;
             this.normalizer = normalizer;
             this.bounder = bounder;
             this.visualisator = visualisator;
@@ -43,8 +46,8 @@ namespace TagsCloudVisualization
             WordCloudElement GetFontAndPutRectangle(KeyValuePair<string, int> kvp)
             {
                 var fontSize = normalizer.GetFontHeghit(kvp.Value, minWeight, maxWeight);
-                var font = new Font(FontFamily.GenericMonospace, fontSize);
-                var rectangle = layouter.PutNextRectangle(new Size((int) Math.Round(fontSize) * kvp.Key.Length,
+                var font = new Font(fontName, fontSize);
+                var rectangle = layouter.PutNextRectangle(new Size((int) Math.Round(fontSize * (kvp.Key.Length + 0.25)),
                     font.Height));
                 return new WordCloudElement(kvp.Key, rectangle, font);
             }
@@ -65,8 +68,8 @@ namespace TagsCloudVisualization
                                 layouter.Center,
                                 layouter.LeftBound, layouter.UpperBound),
                             element.Rectangle.Size),
-                        element.Font));
-            return visualisator.DrawWorldCloud(wordCloud);
+                        element.Font)).ToArray();
+            return visualisator.DrawWordCloud(wordCloud);
         }
     }
 }

@@ -46,7 +46,7 @@ namespace TagsCloudVisualization
             var center = new Point(0, 0);
             var size = new Size(10, 10);
             var layouter = new CircularCloudLayouter(center, new BasisChanger());
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 layouter.PutNextRectangle(size);
             }
@@ -78,7 +78,7 @@ namespace TagsCloudVisualization
             var center = new Point(0, 0);
             var size = new Size(10, 10);
             var layouter = new CircularCloudLayouter(center, new BasisChanger());
-            for (int i = 0; i < 500; i++)
+            for (var i = 0; i < 500; i++)
             {
                 layouter.PutNextRectangle(size);
             }

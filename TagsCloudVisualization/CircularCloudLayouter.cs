@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Autofac;
-using Autofac.Features.AttributeFilters;
 
 namespace TagsCloudVisualization
 {
-    public class CircularCloudLayouter : ICircularCloudLayouter
+    public class CircularCloudLayouter : ICloudLayouter
     {   
         private readonly Point center;
         private readonly IBasisChanger transformer;
@@ -50,7 +48,7 @@ namespace TagsCloudVisualization
 
         public Point Center => center;
         
-        public CircularCloudLayouter([KeyFilter("CloudCenter")] Point center, IBasisChanger transformer)
+        public CircularCloudLayouter(Point center, IBasisChanger transformer)
         {
             this.center = center;
             this.transformer = transformer;

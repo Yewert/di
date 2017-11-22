@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Autofac.Features.AttributeFilters;
 
 namespace TagsCloudVisualization
 {
@@ -12,20 +11,17 @@ namespace TagsCloudVisualization
         private readonly bool debug;
         private readonly Brush brush;
 
-        public WordCloudVisualisator([KeyFilter("DrawingDebug")]bool debug,
-            [KeyFilter("WordBrush")]Brush brush) : this(20, debug, brush)
+        public WordCloudVisualisator(bool debug, Brush brush) : this(20, debug, brush)
         {
         }
 
-        private WordCloudVisualisator(int margin,
-            [KeyFilter("DrawingDebug")]bool debug,
-            [KeyFilter("WordBrush")]Brush brush)
+        public WordCloudVisualisator(int margin, bool debug, Brush brush)
         {
             this.margin = margin;
             this.debug = debug;
             this.brush = brush;
         }
-        public Bitmap DrawWorldCloud(IEnumerable<WordCloudElement> wordCloud)
+        public Bitmap DrawWordCloud(IReadOnlyCollection<WordCloudElement> wordCloud)
         {
             if(wordCloud is null)
                 throw new ArgumentNullException();

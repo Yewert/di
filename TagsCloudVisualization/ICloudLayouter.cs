@@ -2,7 +2,7 @@
 
 namespace TagsCloudVisualization
 {
-    public interface ICircularCloudLayouter
+    public interface ICloudLayouter
     {
         int LeftBound { get; }
         int RightBound { get; }
