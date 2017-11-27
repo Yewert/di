@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 
 namespace TagsCloudVisualization
@@ -32,6 +33,7 @@ namespace TagsCloudVisualization
             var image = new Bitmap(size.Width + 2 * margin, size.Height + 2 * margin);
             using (var graphics = Graphics.FromImage(image))
             {
+                graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
                 foreach (var cloudElement in wordCloud)
                 {
                     graphics.DrawString(cloudElement.Name, cloudElement.Font, brush,

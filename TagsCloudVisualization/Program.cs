@@ -26,12 +26,15 @@ namespace TagsCloudVisualization
 
             var container = new ContainerBuilder();
             container.RegisterType<CircularCloudLayouter>().As<ICloudLayouter>()
-                .WithParameter("center", new Point(0, 0)).InstancePerDependency();
+                .WithParameter("center", new Point(0, 0)).SingleInstance();
             container.Register(x => new FontNormalizer(arguments.MinFontSize, arguments.MaxFontSize)).As<IFontNormalizer>();
             container.RegisterType<ImageBounder>().As<IImageBounder>();
-            container.Register(x => new WordFrequencyAnalyzer(arguments.MinWordLength,
-                    arguments.AmountOfWords, arguments.LowerCase))
-                .As<IWordFrequencyAnalyzer>();
+            container.Register(x => new WordValidator()).As<IWordValidator>();
+            container.RegisterType<WordFrequencyAnalyzer>()
+                .As<IWordFrequencyAnalyzer>()
+                .WithParameter("minimalWordLength", arguments.MinWordLength)
+                .WithParameter("amountOfWords", arguments.AmountOfWords)
+                .WithParameter("lowerCase", arguments.LowerCase);
             
             container.RegisterType<WordCloudVisualisator>()
                 .As<IWordCloudVisualisator>().WithParameter("brush", brush).WithParameter("debug", arguments.Debug);
@@ -54,8 +57,6 @@ namespace TagsCloudVisualization
             var maxFontSize = 150.0f;
             var debug = false;
             var lowerCase = false;
-            
-            //Здесь даже если сделать белый дефолтным, все то же самое
             var colorCode = "#000000";
             var fontName = "Arial";
             var parser = new FluentCommandLineParser();

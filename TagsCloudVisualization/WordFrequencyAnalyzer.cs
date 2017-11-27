@@ -8,14 +8,16 @@ namespace TagsCloudVisualization
     public class WordFrequencyAnalyzer : IWordFrequencyAnalyzer
     {
         private readonly int amountOfWords;
+        private readonly IWordValidator validator;
         private readonly bool lowerCase;
         private readonly Regex wordPattern;
 
-        public WordFrequencyAnalyzer(int minimalWordLength, int amountOfWords, bool lowerCase = true)
+        public WordFrequencyAnalyzer(int minimalWordLength, int amountOfWords, IWordValidator validator, bool lowerCase = true)
         {
             if(minimalWordLength < 1)
                 throw new ArgumentException();
             this.amountOfWords = amountOfWords;
+            this.validator = validator;
             this.lowerCase = lowerCase;
             var pattern = $@"[a-zа-я][a-zа-я-]{{{minimalWordLength - 1},}}";
             wordPattern = new Regex(pattern,
@@ -27,6 +29,7 @@ namespace TagsCloudVisualization
             return lines.SelectMany(line => wordPattern.Matches(line).Cast<Match>()).Select(m => lowerCase
                         ? m.Value.ToLowerInvariant()
                         : m.Value.ToUpperInvariant())
+                    .Where(w => !validator.IsExcluded(w))
                     .GroupBy(w => w)
                     .OrderByDescending(x => x.Count())
                     .Take(amountOfWords)

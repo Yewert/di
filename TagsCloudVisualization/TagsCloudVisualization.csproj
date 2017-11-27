@@ -46,11 +46,13 @@
     <Compile Include="ICloudLayouter.cs" />
     <Compile Include="IWordCloudVisualisator.cs" />
     <Compile Include="IWordFrequencyAnalyzer.cs" />
+    <Compile Include="IWordValidator.cs" />
     <Compile Include="WordCloudElement.cs" />
     <Compile Include="WordFrequencyAnalyzer.cs" />
     <Compile Include="TestCircularCloudLayouter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="WordCloudVisualisator.cs" />
+    <Compile Include="WordValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da">

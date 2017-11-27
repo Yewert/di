@@ -80,7 +80,7 @@ namespace TagsCloudVisualization
         private bool TryPutNextRectangle(Size rectangleSize, out Rectangle rectangle)
         {
             var square = (long)rectangleSize.Height * rectangleSize.Width;
-            var stretchCoefficient = (1.0 / square);
+            var stretchCoefficient = 1.0 / square;
             var angle = 0.0;
             for(var i = 0; i < int.MaxValue; i++)
             {

@@ -47,8 +47,13 @@ namespace TagsCloudVisualization
             {
                 var fontSize = normalizer.GetFontHeghit(kvp.Value, minWeight, maxWeight);
                 var font = new Font(fontName, fontSize);
-                var rectangle = layouter.PutNextRectangle(new Size((int) Math.Round(fontSize * (kvp.Key.Length + 0.25)),
-                    font.Height));
+                Rectangle rectangle;
+                using (var temporaryGraphics = Graphics.FromImage(new Bitmap(1, 1)))
+                {
+                    var size = temporaryGraphics.MeasureString(kvp.Key, font);
+                    rectangle = layouter.PutNextRectangle(new Size((int)Math.Round(size.Width),
+                        (int)Math.Round(size.Height)));
+                }
                 return new WordCloudElement(kvp.Key, rectangle, font);
             }
 
