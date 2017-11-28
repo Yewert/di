@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
 using System.Linq;
 using NUnit.Framework;
+using TagsCloudVisualization.Layout;
+using TagsCloudVisualization.StatsPreparation;
+using TagsCloudVisualization.Visualisation;
 
 namespace TagsCloudVisualization.Tests
 {

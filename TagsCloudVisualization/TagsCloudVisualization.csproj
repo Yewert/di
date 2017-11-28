@@ -35,27 +35,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApplicationArguments.cs" />
-    <Compile Include="BasisChanger.cs" />
-    <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CloudMaker.cs" />
-    <Compile Include="FontNormalizer.cs" />
-    <Compile Include="IFontNormalizer.cs" />
-    <Compile Include="IImageBounder.cs" />
-    <Compile Include="ImageBounder.cs" />
-    <Compile Include="IBasisChanger.cs" />
-    <Compile Include="ICloudLayouter.cs" />
-    <Compile Include="IWordCloudVisualisator.cs" />
-    <Compile Include="IWordFrequencyAnalyzer.cs" />
-    <Compile Include="IWordValidator.cs" />
+    <Compile Include="Layout\BasisChanger.cs" />
+    <Compile Include="Layout\CircularCloudLayouter.cs" />
+    <Compile Include="Layout\IBasisChanger.cs" />
+    <Compile Include="Layout\ICloudLayouter.cs" />
+    <Compile Include="StatsPreparation\IWordFrequencyAnalyzer.cs" />
+    <Compile Include="StatsPreparation\IWordValidator.cs" />
+    <Compile Include="StatsPreparation\WordFrequencyAnalyzer.cs" />
+    <Compile Include="StatsPreparation\WordValidator.cs" />
     <Compile Include="Tests\CloudMaker_Should.cs" />
     <Compile Include="Tests\CircularCloudLayouter_Should.cs" />
     <Compile Include="Tests\WordFrequencyAnalyzer_Should.cs" />
     <Compile Include="Tests\WordValidator_Should.cs" />
+    <Compile Include="Visualisation\FontNormalizer.cs" />
+    <Compile Include="Visualisation\IFontNormalizer.cs" />
+    <Compile Include="Visualisation\IImageBounder.cs" />
+    <Compile Include="Visualisation\ImageBounder.cs" />
+    <Compile Include="Visualisation\IWordCloudVisualisator.cs" />
+    <Compile Include="Visualisation\WordCloudVisualisator.cs" />
     <Compile Include="WordCloudElement.cs" />
-    <Compile Include="WordFrequencyAnalyzer.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="WordCloudVisualisator.cs" />
-    <Compile Include="WordValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da">

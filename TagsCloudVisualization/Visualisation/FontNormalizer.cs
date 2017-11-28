@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualisation
 {
     public class FontNormalizer : IFontNormalizer
     {

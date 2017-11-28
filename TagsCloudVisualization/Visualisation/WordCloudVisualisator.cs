@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Visualisation
 {
     public class WordCloudVisualisator : IWordCloudVisualisator
     {

@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.Layout
 {
     public interface IBasisChanger
     {

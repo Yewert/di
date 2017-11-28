@@ -3,6 +3,9 @@ using System.Drawing;
 using System.IO;
 using Autofac;
 using Fclp;
+using TagsCloudVisualization.Layout;
+using TagsCloudVisualization.StatsPreparation;
+using TagsCloudVisualization.Visualisation;
 
 namespace TagsCloudVisualization
 {

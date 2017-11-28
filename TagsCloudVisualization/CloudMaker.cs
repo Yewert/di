@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TagsCloudVisualization.Layout;
+using TagsCloudVisualization.StatsPreparation;
+using TagsCloudVisualization.Visualisation;
 
 namespace TagsCloudVisualization
 {

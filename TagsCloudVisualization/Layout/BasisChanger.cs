@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Layout
 {
     public class BasisChanger : IBasisChanger
     {

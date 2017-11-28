@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization
+﻿namespace TagsCloudVisualization.StatsPreparation
 {
     public interface IWordValidator
     {
