@@ -2,7 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture]
     public class CloudMaker_Should

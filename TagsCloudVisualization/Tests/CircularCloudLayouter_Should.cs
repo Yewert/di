@@ -5,15 +5,15 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture]
-    public class TestCircularCloudLayouter
+    public class CircularCloudLayouter_Should
     {
         [TestCase(0, 0, 10, 10, -5, -5)]
         [TestCase(10, 10, 10, 10, 5, 5)]
         [TestCase(10, 10, 11, 11, 5, 5)]
-        public void PutsInCenter_WhenFirstRectangleGiven(
+        public void PutInCenter_WhenFirstRectangleGiven(
             int centerX, int centerY, int rectangleWidth, int rectangleHeight, int rectangleX, int rectangleY)
         {
             var center = new Point(centerX, centerY);
@@ -25,7 +25,7 @@ namespace TagsCloudVisualization
         }
 
         [Test]
-        public void HasCorrectBounds_AfterPuttingFirstRectangle()
+        public void HaveCorrectBounds_AfterPuttingFirstRectangle()
         {
             var center = new Point(0, 0);
             var size = new Size(10, 15);
@@ -41,7 +41,7 @@ namespace TagsCloudVisualization
         [TestCase(2)]
         [TestCase(100)]
         [TestCase(1000)]
-        public void HasCorrectCount_WhenMultipleRectanglesAdded(int count)
+        public void HaveCorrectCount_WhenMultipleRectanglesAdded(int count)
         {
             var center = new Point(0, 0);
             var size = new Size(10, 10);
@@ -54,7 +54,7 @@ namespace TagsCloudVisualization
         }
 
         [Test]
-        public void RectanglesDoNotIntersect_WhenPutMultipleRectangles()
+        public void NotReturnIntersectingRectangles_WhenPutMultiple()
         {
             var center = new Point(0, 0);
             var size = new Size(10, 10);
@@ -73,7 +73,7 @@ namespace TagsCloudVisualization
         }
 
         [Test, Timeout(2000)]
-        public void WorksFast_When500RectanglesArePutIn()
+        public void WorkFast_When500RectanglesArePutIn()
         {
             var center = new Point(0, 0);
             var size = new Size(10, 10);
@@ -90,7 +90,7 @@ namespace TagsCloudVisualization
         [TestCase(1, 0)]
         [TestCase(0, 0)]
         [TestCase(-1, -1)]
-        public void ThrowsArgumentException_WhenSizeHasAtLeastOneNonPositivDimension(int width, int height)
+        public void ThrowArgumentException_WhenSizeHasAtLeastOneNonPositiveDimension(int width, int height)
         {
             var center = new Point(0, 0);
             var size = new Size(width, height);

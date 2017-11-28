@@ -2,7 +2,7 @@
 using Moq;
 using NUnit.Framework;
 
-namespace TagsCloudVisualization
+namespace TagsCloudVisualization.Tests
 {
     [TestFixture]
     public class WordFrequencyAnalyzer_Should
@@ -16,7 +16,7 @@ namespace TagsCloudVisualization
         }
 
         [Test]
-        public void ReturnAllWords_WhenNoBannedAndMinimalLengthEqualsOneAndMaxAmountGreaterThanActual()
+        public void ReturnAllWords_WhenAllCriteriasMetWithSomeMargin()
         {
             var analyzer = new WordFrequencyAnalyzer(1, 100, mock.Object);
             var expected = new Dictionary<string, int>
@@ -37,9 +37,8 @@ namespace TagsCloudVisualization
         }
         
         [Test]
-        public void ReturnSomeWordsExceptBanned_WhenGaysAreBannedAndMinimalLengthEqualsOneAndMaxAmountGreaterThanActual()
+        public void ReturnSomeWordsExceptBanned_WhenSingleIsBanned()
         {
-            //Я знаю, что не надо так называть тесты, но мне было скучно)
             mock.Setup(x => x.IsExcluded("gay")).Returns(true);
             var analyzer = new WordFrequencyAnalyzer(1, 100, mock.Object);
             var expected = new Dictionary<string, int>
@@ -79,10 +78,9 @@ namespace TagsCloudVisualization
         {
             mock.Setup(x => x.IsExcluded(It.IsAny<string>())).Returns(true);
             var analyzer = new WordFrequencyAnalyzer(1, 3, mock.Object);
-            var expected = new Dictionary<string, int>();
             Assert.That(
                 analyzer.MakeStatisitcs(new []{"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"}),
-                Is.EquivalentTo(expected));
+                Is.Empty);
         }
 
         [Test]
