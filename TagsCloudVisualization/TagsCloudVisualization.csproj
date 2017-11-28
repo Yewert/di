@@ -38,6 +38,7 @@
     <Compile Include="BasisChanger.cs" />
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CloudMaker.cs" />
+    <Compile Include="CloudMaker_Should.cs" />
     <Compile Include="FontNormalizer.cs" />
     <Compile Include="IFontNormalizer.cs" />
     <Compile Include="IImageBounder.cs" />
@@ -52,11 +53,16 @@
     <Compile Include="TestCircularCloudLayouter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="WordCloudVisualisator.cs" />
+    <Compile Include="WordFrequencyAnalyzer_Should.cs" />
     <Compile Include="WordValidator.cs" />
+    <Compile Include="WordValidator_Should.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da">
       <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+      <HintPath>..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions, Version=4.19.4.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a">
       <HintPath>..\..\packages\FluentAssertions.4.19.4\lib\net45\FluentAssertions.dll</HintPath>
@@ -66,6 +72,9 @@
     </Reference>
     <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.7.145.0, Culture=neutral, PublicKeyToken=69f491c39445e920">
+      <HintPath>..\packages\Moq.4.7.145\lib\net45\Moq.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.8.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
       <HintPath>..\..\packages\NUnit.3.8.1\lib\net45\nunit.framework.dll</HintPath>

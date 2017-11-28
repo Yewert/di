@@ -98,4 +98,5 @@ namespace TagsCloudVisualization
             Assert.Throws<ArgumentException>(() => layouter.PutNextRectangle(size));
         }
     }
+    
 }

@@ -60,21 +60,31 @@ namespace TagsCloudVisualization
             return stats.Select(GetFontAndPutRectangle).ToArray();
         }
 
-
+        private IReadOnlyCollection<WordCloudElement> ShiftCloud(IReadOnlyCollection<WordCloudElement> cloud)
+        {
+            return cloud.Select(element =>
+                new WordCloudElement(element.Name, 
+                    new Rectangle(
+                        bounder.TransformRelativeToAbsoluteBounded(element.Rectangle.Location,
+                            layouter.Center,
+                            layouter.LeftBound, layouter.UpperBound),
+                        element.Rectangle.Size),
+                    element.Font)).ToArray();
+        }
+        
+        private IReadOnlyCollection<WordCloudElement> MakeCloud(IReadOnlyCollection<KeyValuePair<string, int>> stats)
+        {
+            return ShiftCloud(MakeWordCloudFromStats(stats));
+        }
 
         public Bitmap GetImage(IEnumerable<string> source)
         {
-            var stats = MakeStats(source);
-            var wordCloud = MakeWordCloudFromStats(stats)
-                .Select(element =>
-                    new WordCloudElement(element.Name, 
-                        new Rectangle(
-                            bounder.TransformRelativeToAbsoluteBounded(element.Rectangle.Location,
-                                layouter.Center,
-                                layouter.LeftBound, layouter.UpperBound),
-                            element.Rectangle.Size),
-                        element.Font)).ToArray();
-            return visualisator.DrawWordCloud(wordCloud);
+            return visualisator.DrawWordCloud(MakeCloud(MakeStats(source)));
+        }
+        
+        public IReadOnlyCollection<WordCloudElement> GetCloud(IEnumerable<string> source)
+        {
+            return MakeCloud(MakeStats(source));
         }
     }
 }

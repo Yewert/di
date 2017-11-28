@@ -15,7 +15,7 @@ namespace TagsCloudVisualization
 
         public float GetFontHeghit(int frequency, int minOccurence, int maxOccurence)
         {
-            return Math.Max(maxFont * (frequency - minOccurence) / (maxOccurence - minOccurence), minFont);
+            return Math.Max(maxFont * (frequency - minOccurence) / (maxOccurence - minOccurence + 1), minFont);
         }
     }
 }

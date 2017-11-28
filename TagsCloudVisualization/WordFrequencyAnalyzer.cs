@@ -19,7 +19,7 @@ namespace TagsCloudVisualization
             this.amountOfWords = amountOfWords;
             this.validator = validator;
             this.lowerCase = lowerCase;
-            var pattern = $@"[a-zа-я][a-zа-я-]{{{minimalWordLength - 1},}}";
+            var pattern = $@"[a-zа-я][a-zа-я-']{{{minimalWordLength - 1},}}";
             wordPattern = new Regex(pattern,
                 RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
         }
