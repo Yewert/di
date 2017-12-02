@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CommandLine;
+using CommandLine.Text;
 
 namespace TagsCloudVisualization
 {
@@ -86,38 +87,19 @@ namespace TagsCloudVisualization
                 
             }
         }
-
-//        public ApplicationArguments(string savePath, string statsSource, int amountOfWords, int minWordLength,
-//            float minFontSize, float maxFontSize, bool debug, bool lowerCase, string colorCode, string fontName)
-//        {
-//            // ReSharper disable once NotResolvedInText
-//            if (amountOfWords <= 0)
-//                throw new ArgumentOutOfRangeException("Amount of words should be a positive integer");
-//            // ReSharper disable once NotResolvedInText
-//            if (minWordLength <= 0)
-//                throw new ArgumentOutOfRangeException("Minimal word length should be a positive integer");
-//            // ReSharper disable once NotResolvedInText
-//            if (minFontSize <= 0)
-//                throw new ArgumentOutOfRangeException("Minimal font size should be a positive integer");
-//            // ReSharper disable once NotResolvedInText
-//            if (maxFontSize <= 0)
-//                throw new ArgumentOutOfRangeException("Maximal font size should be a positive integer");
-//            if (minFontSize >= maxFontSize)
-//                throw new ArgumentException("Minimal font size should be less than maximal");
-//            // ReSharper disable once NotResolvedInText
-//            SavePath = savePath
-//                       ?? throw new ArgumentNullException("Save path cannot be null");
-//            // ReSharper disable once NotResolvedInText
-//            StatsSource = statsSource
-//                          ?? throw new ArgumentNullException("Stat source path cannot be null");
-//            AmountOfWords = amountOfWords;
-//            MinWordLength = minWordLength;
-//            MinFontSize = minFontSize;
-//            MaxFontSize = maxFontSize;
-//            Debug = debug;
-//            LowerCase = lowerCase;
-//            ColorCode = colorCode;
-//            FontName = fontName;
-//        }
+        
+        [HelpOption]
+        public string GetUsage()
+        {
+            var help = new HelpText
+            {
+                Heading = new HeadingInfo("Tag Cloud Generator App", "1.0"),
+                Copyright = new CopyrightInfo("", 3017),
+                AddDashesToOption = true,
+                AdditionalNewLineAfterOption = true
+            };
+            help.AddOptions(this);
+            return help;
+        }
     }
 }

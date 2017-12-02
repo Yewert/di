@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 using CommandLine;
 using TagsCloudVisualization.Layout;
@@ -19,17 +20,11 @@ namespace TagsCloudVisualization
             {
                 arguments = ParseArgs(args);
             }
-            catch (ArgumentException e)
+            catch (TargetInvocationException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e.InnerException.Message);
                 return;
             }
-            catch (ParserException e)
-            {
-                Console.WriteLine(e.Message);
-                return;
-            }
-
             var color = ColorTranslator.FromHtml(arguments.ColorCode);
             var brush = new SolidBrush(color);
 
