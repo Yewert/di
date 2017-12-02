@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using Autofac;
-using Fclp;
+using CommandLine;
 using TagsCloudVisualization.Layout;
 using TagsCloudVisualization.StatsPreparation;
 using TagsCloudVisualization.Visualisation;
@@ -19,6 +20,11 @@ namespace TagsCloudVisualization
                 arguments = ParseArgs(args);
             }
             catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                return;
+            }
+            catch (ParserException e)
             {
                 Console.WriteLine(e.Message);
                 return;
@@ -52,31 +58,9 @@ namespace TagsCloudVisualization
 
         private static ApplicationArguments ParseArgs(string[] args)
         {
-            string savePath = null;
-            string statsSource = null;
-            var amountOfWords = 250;
-            var minWordLength = 3;
-            var minFontSize = 10.0f;
-            var maxFontSize = 150.0f;
-            var debug = false;
-            var lowerCase = false;
-            var colorCode = "#000000";
-            var fontName = "Arial";
-            var parser = new FluentCommandLineParser();
-            parser.Setup<string>('S', "source").Callback(source => statsSource = source).Required();
-            parser.Setup<string>('s', "save").Callback(save => savePath = save).Required();
-            parser.Setup<int>('a', "amount").Callback(amount => amountOfWords = amount);
-            parser.Setup<int>('L', "Length").Callback(length => minWordLength = length);
-            parser.Setup<int>('m', "minfont").Callback(min => minFontSize = min);
-            parser.Setup<int>('M', "maxfont").Callback(max => maxFontSize = max);
-            parser.Setup<string>('c', "color").Callback(code => colorCode = code);
-            parser.Setup<string>('f', "font").Callback(font => fontName = font);
-            parser.Setup<bool>('d', "debug").Callback(d => debug = d);
-            parser.Setup<bool>('l', "lower").Callback(l => lowerCase = l);
-            parser.SetupHelp("h", "help", "?").Callback(x => Console.WriteLine(x)).UseForEmptyArgs();
-            parser.Parse(args);
-            return new ApplicationArguments(savePath, statsSource, amountOfWords, minWordLength, minFontSize,
-                maxFontSize, debug, lowerCase, colorCode, fontName);
+            var options = new ApplicationArguments();
+            var isValid = CommandLine.Parser.Default.ParseArgumentsStrict(args, options);
+            return options;
         }
     }
 }
