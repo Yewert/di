@@ -10,7 +10,7 @@ namespace TagsCloudVisualization
         [Option('s', "save-path", Required = true, HelpText="Save path for image (excluding extension)")]
         public string SavePath
         {
-            get { return savePath; }
+            get => savePath;
             set => savePath = value ?? throw new ArgumentException("Save path cannot be null");
         }
         
@@ -66,7 +66,7 @@ namespace TagsCloudVisualization
         [Option('f', "font-size-pair", HelpText = "Font size pair in format \"10,150\"", DefaultValue = "10,150")]
         public string FontSizePair
         {
-            get { return fontSizePair.ToString(); }
+            get => fontSizePair.ToString();
             set
             {
                 try
@@ -94,7 +94,7 @@ namespace TagsCloudVisualization
             var help = new HelpText
             {
                 Heading = new HeadingInfo("Tag Cloud Generator App", "1.0"),
-                Copyright = new CopyrightInfo("", 3017),
+                Copyright = new CopyrightInfo("github.com/yewert", 3017),
                 AddDashesToOption = true,
                 AdditionalNewLineAfterOption = true
             };

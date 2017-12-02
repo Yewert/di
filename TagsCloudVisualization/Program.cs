@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using Autofac;
 using CommandLine;
@@ -22,7 +21,7 @@ namespace TagsCloudVisualization
             }
             catch (TargetInvocationException e)
             {
-                Console.WriteLine(e.InnerException.Message);
+                Console.WriteLine(e.InnerException?.Message);
                 return;
             }
             var color = ColorTranslator.FromHtml(arguments.ColorCode);
@@ -54,7 +53,7 @@ namespace TagsCloudVisualization
         private static ApplicationArguments ParseArgs(string[] args)
         {
             var options = new ApplicationArguments();
-            var isValid = CommandLine.Parser.Default.ParseArgumentsStrict(args, options);
+            Parser.Default.ParseArgumentsStrict(    args, options);
             return options;
         }
     }
