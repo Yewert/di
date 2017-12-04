@@ -36,10 +36,11 @@
   <ItemGroup>
     <Compile Include="ApplicationArguments.cs" />
     <Compile Include="CloudMaker.cs" />
-    <Compile Include="Layout\BasisChanger.cs" />
     <Compile Include="Layout\CircularCloudLayouter.cs" />
-    <Compile Include="Layout\IBasisChanger.cs" />
+    <Compile Include="Layout\FontNormalizer.cs" />
+    <Compile Include="Layout\BasisChanger.cs" />
     <Compile Include="Layout\ICloudLayouter.cs" />
+    <Compile Include="Layout\IFontNormalizer.cs" />
     <Compile Include="StatsPreparation\IWordFrequencyAnalyzer.cs" />
     <Compile Include="StatsPreparation\IWordValidator.cs" />
     <Compile Include="StatsPreparation\WordFrequencyAnalyzer.cs" />
@@ -48,10 +49,7 @@
     <Compile Include="Tests\CircularCloudLayouter_Should.cs" />
     <Compile Include="Tests\WordFrequencyAnalyzer_Should.cs" />
     <Compile Include="Tests\WordValidator_Should.cs" />
-    <Compile Include="Visualisation\FontNormalizer.cs" />
-    <Compile Include="Visualisation\IFontNormalizer.cs" />
-    <Compile Include="Visualisation\IImageBounder.cs" />
-    <Compile Include="Visualisation\ImageBounder.cs" />
+    <Compile Include="Visualisation\CloudCenterer.cs" />
     <Compile Include="Visualisation\IWordCloudVisualisator.cs" />
     <Compile Include="Visualisation\WordCloudVisualisator.cs" />
     <Compile Include="WordCloudElement.cs" />

@@ -35,6 +35,7 @@ namespace TagsCloudVisualization.Tests
             Assert.That(analyzer.MakeStatisitcs(
                 new []{"Hi, I am gay", "Don't judge me for being gay!"}),
                 Is.EquivalentTo(expected));
+            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(10));
         }
         
         [Test]
@@ -56,6 +57,7 @@ namespace TagsCloudVisualization.Tests
             Assert.That(
                 analyzer.MakeStatisitcs(new []{"Hi, I am gay", "Don't judge me for being gay!"}),
                 Is.EquivalentTo(expected));
+            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(10));
         }
         
         [Test]
@@ -72,6 +74,7 @@ namespace TagsCloudVisualization.Tests
             Assert.That(
                 analyzer.MakeStatisitcs(new []{"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"}),
                 Is.EquivalentTo(expected));
+            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(15));
         }
         
         [Test]
@@ -82,6 +85,7 @@ namespace TagsCloudVisualization.Tests
             Assert.That(
                 analyzer.MakeStatisitcs(new []{"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"}),
                 Is.Empty);
+            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(15));
         }
 
         [Test]
@@ -98,6 +102,7 @@ namespace TagsCloudVisualization.Tests
             Assert.That(analyzer.MakeStatisitcs(
                 new []{"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"}),
                 Is.EquivalentTo(expected));
+            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(3));
         }
         
     }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using NUnit.Framework;
 using TagsCloudVisualization.Layout;
@@ -15,12 +16,19 @@ namespace TagsCloudVisualization.Tests
         [SetUp]
         public void SetUp()
         {
+            BasisChanger changer = (angle, length) =>
+            {
+                var x = (int) (length * Math.Cos(angle));
+                var y = (int) (length * Math.Sin(angle));
+                return (X:x, Y:y);
+            };
             defaultCloudMaker = new CloudMaker(
                 new WordFrequencyAnalyzer(1, 100, new WordValidator(new string[]{})),
-                new CircularCloudLayouter(new Point(0, 0), new BasisChanger()),
+                new CircularCloudLayouter(new Point(0, 0), changer),
                 "Arial",
                 new FontNormalizer(10, 100),
-                new ImageBounder(),
+                (actualPoint, center, boundX, boundY)
+                    => new Point(actualPoint.X + center.X - boundX, actualPoint.Y + center.Y - boundY),
                 new WordCloudVisualisator(0, false, Brushes.Black));
         }
 

@@ -11,6 +11,12 @@ namespace TagsCloudVisualization.Tests
     [TestFixture]
     public class CircularCloudLayouter_Should
     {
+        private BasisChanger changer = (angle, length) =>
+        {
+            var x = (int) (length * Math.Cos(angle));
+            var y = (int) (length * Math.Sin(angle));
+            return (X:x, Y:y);
+        };
         [TestCase(0, 0, 10, 10, -5, -5)]
         [TestCase(10, 10, 10, 10, 5, 5)]
         [TestCase(10, 10, 11, 11, 5, 5)]
@@ -21,7 +27,7 @@ namespace TagsCloudVisualization.Tests
             var size = new Size(rectangleWidth, rectangleHeight);
             var rectangleCoords = new Point(rectangleX, rectangleY);
             var rectangle = new Rectangle(rectangleCoords, size);
-            var layouter = new CircularCloudLayouter(center, new BasisChanger());
+            var layouter = new CircularCloudLayouter(center, changer);
             layouter.PutNextRectangle(size).ShouldBeEquivalentTo(rectangle);
         }
 
@@ -30,7 +36,7 @@ namespace TagsCloudVisualization.Tests
         {
             var center = new Point(0, 0);
             var size = new Size(10, 15);
-            var layouter = new CircularCloudLayouter(center, new BasisChanger());
+            var layouter = new CircularCloudLayouter(center, changer);
             layouter.PutNextRectangle(size);
             (int left, int right, int top, int bottom, int width, int height) actualDimensions =
                 (layouter.LeftBound, layouter.RightBound,
@@ -46,7 +52,7 @@ namespace TagsCloudVisualization.Tests
         {
             var center = new Point(0, 0);
             var size = new Size(10, 10);
-            var layouter = new CircularCloudLayouter(center, new BasisChanger());
+            var layouter = new CircularCloudLayouter(center, changer);
             for (var i = 0; i < count; i++)
             {
                 layouter.PutNextRectangle(size);
@@ -59,7 +65,7 @@ namespace TagsCloudVisualization.Tests
         {
             var center = new Point(0, 0);
             var size = new Size(10, 10);
-            var layouter = new CircularCloudLayouter(center, new BasisChanger());
+            var layouter = new CircularCloudLayouter(center, changer);
             var rectangles = new List<Rectangle>();
             for (var i = 0; i < 100; i++)
             {
@@ -78,7 +84,7 @@ namespace TagsCloudVisualization.Tests
         {
             var center = new Point(0, 0);
             var size = new Size(10, 10);
-            var layouter = new CircularCloudLayouter(center, new BasisChanger());
+            var layouter = new CircularCloudLayouter(center, changer);
             for (var i = 0; i < 500; i++)
             {
                 layouter.PutNextRectangle(size);
@@ -95,7 +101,7 @@ namespace TagsCloudVisualization.Tests
         {
             var center = new Point(0, 0);
             var size = new Size(width, height);
-            var layouter = new CircularCloudLayouter(center, new BasisChanger());
+            var layouter = new CircularCloudLayouter(center, changer);
             Assert.Throws<ArgumentException>(() => layouter.PutNextRectangle(size));
         }
     }

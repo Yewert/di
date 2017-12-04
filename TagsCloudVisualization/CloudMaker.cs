@@ -14,7 +14,7 @@ namespace TagsCloudVisualization
         private readonly ICloudLayouter layouter;
         private readonly string fontName;
         private readonly IFontNormalizer normalizer;
-        private readonly IImageBounder bounder;
+        private readonly CloudCenterer doCentering;
         private readonly IWordCloudVisualisator visualisator;
 
         public CloudMaker(
@@ -22,14 +22,14 @@ namespace TagsCloudVisualization
             ICloudLayouter layouter,
             string fontName,
             IFontNormalizer normalizer,
-            IImageBounder bounder,
+            CloudCenterer doCentering,
             IWordCloudVisualisator visualisator)
         {
             this.statsMaker = statsMaker;
             this.layouter = layouter;
             this.fontName = fontName;
             this.normalizer = normalizer;
-            this.bounder = bounder;
+            this.doCentering = doCentering;
             this.visualisator = visualisator;
             
         }
@@ -46,21 +46,20 @@ namespace TagsCloudVisualization
             var maxWeight = stats.Max(kvp => kvp.Value);
             var minWeight = stats.Min(kvp => kvp.Value);
 
+            var temporaryGraphics = Graphics.FromImage(new Bitmap(1, 1));
             WordCloudElement GetFontAndPutRectangle(KeyValuePair<string, int> kvp)
             {
                 var fontSize = normalizer.GetFontHeghit(kvp.Value, minWeight, maxWeight);
                 var font = new Font(fontName, fontSize);
-                Rectangle rectangle;
-                using (var temporaryGraphics = Graphics.FromImage(new Bitmap(1, 1)))
-                {
-                    var size = temporaryGraphics.MeasureString(kvp.Key, font);
-                    rectangle = layouter.PutNextRectangle(new Size((int)Math.Round(size.Width),
-                        (int)Math.Round(size.Height)));
-                }
+                var size = temporaryGraphics.MeasureString(kvp.Key, font);
+                var rectangle = layouter.PutNextRectangle(new Size((int) Math.Round(size.Width),
+                    (int) Math.Round(size.Height)));
                 return new WordCloudElement(kvp.Key, rectangle, font);
             }
 
-            return stats.Select(GetFontAndPutRectangle).ToArray();
+            var result = stats.Select(GetFontAndPutRectangle).ToArray();
+            temporaryGraphics.Dispose();
+            return result;
         }
 
         private IReadOnlyCollection<WordCloudElement> ShiftCloud(IReadOnlyCollection<WordCloudElement> cloud)
@@ -68,7 +67,7 @@ namespace TagsCloudVisualization
             return cloud.Select(element =>
                 new WordCloudElement(element.Name, 
                     new Rectangle(
-                        bounder.TransformRelativeToAbsoluteBounded(element.Rectangle.Location,
+                        doCentering(element.Rectangle.Location,
                             layouter.Center,
                             layouter.LeftBound, layouter.UpperBound),
                         element.Rectangle.Size),

@@ -8,7 +8,7 @@ namespace TagsCloudVisualization.Layout
     public class CircularCloudLayouter : ICloudLayouter
     {   
         private readonly Point center;
-        private readonly IBasisChanger transformer;
+        private readonly BasisChanger transform;
 
         public int LeftBound
         {
@@ -48,10 +48,10 @@ namespace TagsCloudVisualization.Layout
 
         public Point Center => center;
         
-        public CircularCloudLayouter(Point center, IBasisChanger transformer)
+        public CircularCloudLayouter(Point center, BasisChanger transform)
         {
             this.center = center;
-            this.transformer = transformer;
+            this.transform = transform;
             rectangles = new List<Rectangle>();
         }
 
@@ -84,7 +84,7 @@ namespace TagsCloudVisualization.Layout
             var angle = 0.0;
             for(var i = 0; i < int.MaxValue; i++)
             {
-                var shiftFromCenter = transformer.TransformCoordinatesFromPolarToCartesian(angle, angle);
+                var shiftFromCenter = transform(angle, angle);
                 var upperLeftCorner = new Point(Center.X + shiftFromCenter.X - rectangleSize.Width / 2,
                     Center.Y + shiftFromCenter.Y - rectangleSize.Height / 2);
                 var temporaryRectangle = new Rectangle(upperLeftCorner, rectangleSize);

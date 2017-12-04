@@ -1,4 +1,4 @@
-﻿namespace TagsCloudVisualization.Visualisation
+﻿namespace TagsCloudVisualization.Layout
 {
     public interface IFontNormalizer
     {
