@@ -35,7 +35,6 @@ namespace TagsCloudVisualization.Tests
             Assert.That(analyzer.MakeStatisitcs(
                 new []{"Hi, I am gay", "Don't judge me for being gay!"}),
                 Is.EquivalentTo(expected));
-            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(10));
         }
         
         [Test]
@@ -57,7 +56,6 @@ namespace TagsCloudVisualization.Tests
             Assert.That(
                 analyzer.MakeStatisitcs(new []{"Hi, I am gay", "Don't judge me for being gay!"}),
                 Is.EquivalentTo(expected));
-            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(10));
         }
         
         [Test]
@@ -74,7 +72,6 @@ namespace TagsCloudVisualization.Tests
             Assert.That(
                 analyzer.MakeStatisitcs(new []{"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"}),
                 Is.EquivalentTo(expected));
-            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(15));
         }
         
         [Test]
@@ -85,7 +82,6 @@ namespace TagsCloudVisualization.Tests
             Assert.That(
                 analyzer.MakeStatisitcs(new []{"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"}),
                 Is.Empty);
-            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(15));
         }
 
         [Test]
@@ -102,7 +98,17 @@ namespace TagsCloudVisualization.Tests
             Assert.That(analyzer.MakeStatisitcs(
                 new []{"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"}),
                 Is.EquivalentTo(expected));
-            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(3));
+        }
+
+        [TestCase(1, 15, 2, TestName = "ForEachWordWhenMaxAmountLessThanTotal")]
+        [TestCase(1, 15, 20, TestName = "ForEachWordWhenMaxAmountGreaterThanTotal")]
+        [TestCase(5, 3, 200, TestName = "ForLongEnoughWordsWhenMinLengthGreaterThanOne")]
+        public void CallValidatorCorrectNumberOfTimes(int minWordLength, int callsAmout, int maxAmountOfWords)
+        {
+            mock.Setup(x => x.IsExcluded(It.IsAny<string>())).Returns(false);
+            var analyzer = new WordFrequencyAnalyzer(minWordLength, maxAmountOfWords, mock.Object);
+            analyzer.MakeStatisitcs(new[] {"Hi, I am gay", "Don't judge me for being gay!", "I am who i am"});
+            mock.Verify(m => m.IsExcluded(It.IsAny<string>()), Times.Exactly(callsAmout));
         }
         
     }
