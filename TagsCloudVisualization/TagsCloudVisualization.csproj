@@ -41,6 +41,8 @@
     <Compile Include="Layout\BasisChanger.cs" />
     <Compile Include="Layout\ICloudLayouter.cs" />
     <Compile Include="Layout\IFontNormalizer.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="ResultExtensions.cs" />
     <Compile Include="StatsPreparation\IWordFrequencyAnalyzer.cs" />
     <Compile Include="StatsPreparation\IWordValidator.cs" />
     <Compile Include="StatsPreparation\WordFrequencyAnalyzer.cs" />

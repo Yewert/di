@@ -40,51 +40,48 @@ namespace TagsCloudVisualization
             return stats.ToArray();
         }
 
-        private IReadOnlyCollection<WordCloudElement> MakeWordCloudFromStats(
+        private Result<WordCloudElement[]> MakeWordCloudFromStats(
                 IReadOnlyCollection<KeyValuePair<string, int>> stats)
         {
             var maxWeight = stats.Max(kvp => kvp.Value);
             var minWeight = stats.Min(kvp => kvp.Value);
 
             var temporaryGraphics = Graphics.FromImage(new Bitmap(1, 1));
-            WordCloudElement GetFontAndPutRectangle(KeyValuePair<string, int> kvp)
+            Result<WordCloudElement> GetFontAndPutRectangle(KeyValuePair<string, int> kvp)
             {
                 var fontSize = normalizer.GetFontHeghit(kvp.Value, minWeight, maxWeight);
-                var font = new Font(fontName, fontSize);
-                var size = temporaryGraphics.MeasureString(kvp.Key, font);
-                var rectangle = layouter.PutNextRectangle(new Size((int) Math.Round(size.Width),
-                    (int) Math.Round(size.Height)));
-                return new WordCloudElement(kvp.Key, rectangle, font);
+                var font = Result.Of(() => new Font(fontName, fontSize), "Incorrect font or size");
+                var size = font.Then(f => temporaryGraphics.MeasureString(kvp.Key, f));
+                return size.Then(s => layouter.PutNextRectangle(new Size((int) Math.Round(s.Width),
+                    (int) Math.Round(s.Height)))).Then(r => Result.Ok(new WordCloudElement(kvp.Key, r, font.Value)));
             }
 
-            var result = stats.Select(GetFontAndPutRectangle).ToArray();
-            temporaryGraphics.Dispose();
-            return result;
+            return stats.Select(GetFontAndPutRectangle).ToArray().CheckForErrors();
         }
 
-        private IReadOnlyCollection<WordCloudElement> ShiftCloud(IReadOnlyCollection<WordCloudElement> cloud)
+        private Result<WordCloudElement[]> ShiftCloud(Result<WordCloudElement[]> cloud)
         {
-            return cloud.Select(element =>
+            return cloud.Then(x => x.Select(element =>
                 new WordCloudElement(element.Name, 
                     new Rectangle(
                         doCentering(element.Rectangle.Location,
                             layouter.Center,
                             layouter.LeftBound, layouter.UpperBound),
                         element.Rectangle.Size),
-                    element.Font)).ToArray();
+                    element.Font)).ToArray());
         }
         
-        private IReadOnlyCollection<WordCloudElement> MakeCloud(IReadOnlyCollection<KeyValuePair<string, int>> stats)
+        private Result<WordCloudElement[]> MakeCloud(IReadOnlyCollection<KeyValuePair<string, int>> stats)
         {
             return ShiftCloud(MakeWordCloudFromStats(stats));
         }
 
-        public Bitmap GetImage(IEnumerable<string> source)
+        public Result<Bitmap> GetImage(IEnumerable<string> source)
         {
-            return visualisator.DrawWordCloud(MakeCloud(MakeStats(source)));
+            return MakeCloud(MakeStats(source)).Then(x => visualisator.DrawWordCloud(x));
         }
-        
-        public IReadOnlyCollection<WordCloudElement> GetCloud(IEnumerable<string> source)
+
+        public Result<WordCloudElement[]> GetCloud(IEnumerable<string> source)
         {
             return MakeCloud(MakeStats(source));
         }

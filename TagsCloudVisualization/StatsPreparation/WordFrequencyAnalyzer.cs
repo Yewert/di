@@ -14,6 +14,7 @@ namespace TagsCloudVisualization.StatsPreparation
 
         public WordFrequencyAnalyzer(int minimalWordLength, int amountOfWords, IWordValidator validator, bool lowerCase = true)
         {
+            //TODO
             if(minimalWordLength < 1)
                 throw new ArgumentException();
             this.amountOfWords = amountOfWords;

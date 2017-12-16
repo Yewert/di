@@ -36,27 +36,36 @@ namespace TagsCloudVisualization.Tests
         [Test]
         public void ReturnCloudOfOneWord_WhenOnlyOneWordPresentInText()
         {
-            Assert.That(defaultCloudMaker.GetCloud(Enumerable.Repeat("Lol", 100)).Count, Is.EqualTo(1));
+            var cloud = defaultCloudMaker.GetCloud(Enumerable.Repeat("Lol", 100)).GetValueOrThrow();
+            Assert.That(cloud.Count, Is.EqualTo(1));
         }
         
         [Test]
         public void ReturnRectanglePlacedAtTheCenterOfCoordinates_WhenWhenOnlyOneWordPresentInText()
         {
-            Assert.That(defaultCloudMaker.GetCloud(Enumerable.Repeat("Lol", 100)).ToArray()[0].Rectangle.Location,
+            var cloud = defaultCloudMaker.GetCloud(Enumerable.Repeat("Lol", 100)).GetValueOrThrow();
+            Assert.That(cloud.ToArray()[0].Rectangle.Location,
                 Is.EqualTo(new Point(0, 0)));
         }
         
         [Test]
         public void ReturnCorrectWords_WhenMultipleWordsPresented()
         {
-            Assert.That(defaultCloudMaker.GetCloud(Enumerable.Repeat("Lol KeK", 100)).Select(x => x.Name),
+            var cloud = defaultCloudMaker.GetCloud(Enumerable.Repeat("Lol KeK", 100)).GetValueOrThrow();
+            Assert.That(cloud.Select(x => x.Name),
                 Is.EquivalentTo(new []{"lol", "kek"}));
         }
         
         [Test]
         public void ReturnCorrectSizeProportions_WhenMultipleWordsPresented()
         {
-            var result = defaultCloudMaker.GetCloud(Enumerable.Repeat("Lol", 100).Concat(Enumerable.Repeat("cheBuRek", 50)).Concat(new[] {"kek"}))
+            var cloud =
+                defaultCloudMaker.GetCloud(
+                    Enumerable.Repeat("Lol", 100)
+                        .Concat(Enumerable.Repeat("cheBuRek", 50))
+                        .Concat(new[] {"kek"}))
+                    .GetValueOrThrow();
+            var result = cloud
                 .ToDictionary(x => x.Name, x => x.Rectangle.Height);
             Assert.Multiple(() =>
             {

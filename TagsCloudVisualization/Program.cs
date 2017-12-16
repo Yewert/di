@@ -57,8 +57,9 @@ namespace TagsCloudVisualization
             
             var build = container.Build();
             var maker = build.Resolve<CloudMaker>();
-            
-            maker.GetImage(File.ReadLines(arguments.StatsSource)).Save(arguments.SavePath + ".png");
+
+            var image = maker.GetImage(File.ReadLines(arguments.StatsSource));
+            image.Then(x => Result.OfAction(() => x.Save(arguments.SavePath + ".png"))).OnFail(Console.WriteLine);
         }
 
         private static ApplicationArguments ParseArgs(string[] args)

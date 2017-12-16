@@ -28,7 +28,7 @@ namespace TagsCloudVisualization.Tests
             var rectangleCoords = new Point(rectangleX, rectangleY);
             var rectangle = new Rectangle(rectangleCoords, size);
             var layouter = new CircularCloudLayouter(center, changer);
-            layouter.PutNextRectangle(size).ShouldBeEquivalentTo(rectangle);
+            layouter.PutNextRectangle(size).GetValueOrThrow().ShouldBeEquivalentTo(rectangle);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace TagsCloudVisualization.Tests
             var rectangles = new List<Rectangle>();
             for (var i = 0; i < 100; i++)
             {
-                rectangles.Add(layouter.PutNextRectangle(size));
+                rectangles.Add(layouter.PutNextRectangle(size).GetValueOrThrow());
             }
             Assert.False(rectangles
                 .AsParallel()
@@ -102,7 +102,7 @@ namespace TagsCloudVisualization.Tests
             var center = new Point(0, 0);
             var size = new Size(width, height);
             var layouter = new CircularCloudLayouter(center, changer);
-            Assert.Throws<ArgumentException>(() => layouter.PutNextRectangle(size));
+            Assert.That(!layouter.PutNextRectangle(size).IsSuccess);
         }
     }
     

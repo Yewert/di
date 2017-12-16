@@ -12,6 +12,6 @@ namespace TagsCloudVisualization.Layout
         int Width { get; }
         int Height { get; }
         Point Center { get; }
-        Rectangle PutNextRectangle(Size rectangleSize);
+        Result<Rectangle> PutNextRectangle(Size rectangleSize);
     }
 }

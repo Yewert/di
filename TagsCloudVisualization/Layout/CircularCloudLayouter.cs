@@ -55,14 +55,14 @@ namespace TagsCloudVisualization.Layout
             rectangles = new List<Rectangle>();
         }
 
-        public Rectangle PutNextRectangle(Size rectangleSize)
+        public Result<Rectangle> PutNextRectangle(Size rectangleSize)
         {
             if (rectangleSize.Width <= 0 || rectangleSize.Height <= 0)
-                throw new ArgumentException();
+                return Result.Fail<Rectangle>("Incorrect rectangle dimensions");
             var success = TryPutNextRectangle(rectangleSize, out var rectangle);
             if (!success)
             {
-                throw new NotSupportedException();
+                return Result.Fail<Rectangle>("Could not find place");
             }
             UpdateBounds(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             rectangles.Add(rectangle);
